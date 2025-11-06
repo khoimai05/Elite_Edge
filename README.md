@@ -4,7 +4,8 @@ Interactive visualization of NCAA basketball team ratings using KenPom data.
 
 ## 📊 Visualization
 
-[![KenPom Ratings](output/kenpom_ratings.png)](https://khoimai05.github.io/Elite_Edge/output/kenpom_ratings.html)
+[![KenPom Ratings](output/kenpom_ratings.png)]
+(https://khoimai05.github.io/Elite_Edge/output/kenpom_ratings.html)
 
 *Click the image above to explore the interactive visualization* 🎯
 
