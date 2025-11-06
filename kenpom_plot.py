@@ -10,6 +10,7 @@ from matplotlib.path import Path as MPLPath
 import plotly.graph_objects as go
 from dotenv import load_dotenv
 from datetime import datetime
+import plotly.io as pio
 import logging
 
 # Set up logging
@@ -221,6 +222,7 @@ def create_plot(df, output_path='kenpom_ratings_plot.html'):
     
     # Save the plot
     fig.write_html(output_path)
+    pio.write_image(fig, 'output/kenpom_ratings.png', width=1200, height=800)
     logger.info(f"Plot saved to {output_path}")
     
     # Log summary
