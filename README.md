@@ -4,14 +4,14 @@ Interactive visualization of NCAA basketball team ratings using KenPom data.
 
 ## 📊 Visualization
 
-[![KenPom Ratings](output/kenpom_ratings.png)]
-(https://khoimai05.github.io/Elite_Edge/output/kenpom_ratings.html)
+[![KenPom Ratings](output/kenpom_ratings.png)](https://khoimai05.github.io/Elite_Edge/output/kenpom_ratings.html)
 
 *Click the image above to explore the interactive visualization* 🎯
 
 Click the link above to explore the interactive Plotly visualization with:
 - **Yellow Stars** ⭐ - Teams inside the highlighted zone
 - **Blue Dots** 🔵 - All other teams
+- Teams Inside The "Trapezoid of Excellence" are believed to do well in March
 - Hover over points to see team details
 - Zoom, pan, and interact with the chart
 
