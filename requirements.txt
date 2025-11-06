@@ -1,4 +1,5 @@
 pandas
 kenpompy
 python-dotenv
+plotly
 
