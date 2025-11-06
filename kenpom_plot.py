@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 
-def fetch_kenpom_data(year=2025):
+def fetch_kenpom_data(year):
     """
     Fetch team ratings data from KenPom API
     
@@ -233,7 +233,7 @@ def create_plot(df, output_path='kenpom_ratings_plot.html'):
     return output_path
 
 
-def main(year=2025, output_dir='output'):
+def main(year=2026, output_dir='output'):
     """
     Main function to fetch data and create visualization
     
@@ -247,7 +247,7 @@ def main(year=2025, output_dir='output'):
         
         # Generate output filename with timestamp
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        output_path = os.path.join(output_dir, f'kenpom_ratings_{timestamp}.html')
+        output_path = os.path.join(output_dir, f'kenpom_ratings.html')
         
         # Fetch data
         df = fetch_kenpom_data(year)
