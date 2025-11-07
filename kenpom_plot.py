@@ -145,7 +145,7 @@ def create_plot(df, output_path='kenpom_ratings_plot.html'):
                 color='blue',
                 symbol='circle',
                 opacity=0.6,
-                line=dict(width=0.5, color='darkblue')
+                line=dict(width=0.5, color='#009CDE')
             ),
             text=[d['name'] for d in outside_data],
             hovertemplate='<b>%{text}</b><br>' +
@@ -179,8 +179,9 @@ def create_plot(df, output_path='kenpom_ratings_plot.html'):
     # Update layout with white theme
     fig.update_layout(
         title=dict(
-            text='NCAA March Madness: KenPom Team Ratings<br>Tempo vs Efficiency Margin',
-            font=dict(size=20, color='black', family='Arial Black'),
+            text='ROAD TO INDIANAPOLIS\n' \
+            'Trapezoid of Excellence',
+            font=dict(size=20, color='#009CDE', family='Arial Black'),
             x=0.5
         ),
         xaxis=dict(
