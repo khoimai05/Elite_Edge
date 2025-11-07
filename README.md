@@ -3,10 +3,7 @@
 Interactive visualization of NCAA basketball team ratings using KenPom data.
 
 ## 📊 Visualization
-<a href="https://khoimai05.github.io/Elite_Edge/output/kenpom_ratings.html" target="_blank">
-  <img src="output/kenpom_ratings.png" alt="KenPom Ratings">
-</a>
-
+[View Interactive Chart →](https://khoimai05.github.io/Elite_Edge/output/kenpom_ratings.html)
 
 Click the link above to explore the interactive Plotly visualization with:
 - **Yellow Stars** ⭐ - Teams inside the highlighted zone
