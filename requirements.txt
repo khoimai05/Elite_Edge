@@ -1,5 +1,8 @@
 pandas
-kenpompy
 python-dotenv
 plotly
+kaleido
+numpy
+matplotlib
+
 
