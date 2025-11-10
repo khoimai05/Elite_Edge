@@ -22,3 +22,18 @@ ENV/
 *.swp
 *.swo
 
+# Airflow
+airflow.db
+airflow.cfg
+logs/
+*.log
+
+# Astro CLI
+.astro/
+.astrocloud/
+
+# Output files (but allow HTML files in dags/output/ to be committed)
+output/
+dags/output/*.png
+/tmp/
+

@@ -4,5 +4,6 @@ plotly
 kaleido
 numpy
 matplotlib
+requests
 
 

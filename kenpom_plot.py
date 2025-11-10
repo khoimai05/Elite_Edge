@@ -35,10 +35,26 @@ def fetch_kenpom_data(year):
         DataFrame with team ratings data
     """
     BASE_URL = "https://kenpom.com/api.php"
+    
+    # Try to get API key from environment variables first
     API_KEY = os.getenv('KENPOM_API_KEY')
     
+    # If not found, try to get from Airflow Variables (if running in Airflow)
     if not API_KEY:
-        raise ValueError("KENPOM_API_KEY not found in environment variables")
+        try:
+            from airflow.models import Variable
+            API_KEY = Variable.get("KENPOM_API_KEY", default_var=None)
+        except (ImportError, Exception):
+            # Not running in Airflow or Variable doesn't exist
+            pass
+    
+    if not API_KEY:
+        raise ValueError(
+            "KENPOM_API_KEY not found. Please set it as:\n"
+            "1. Environment variable: KENPOM_API_KEY\n"
+            "2. Airflow Variable: Admin → Variables → Add 'KENPOM_API_KEY'\n"
+            "3. Or in .env file (for local development)"
+        )
     
     headers = {
         "Authorization": f"Bearer {API_KEY}"
@@ -73,17 +89,25 @@ def point_in_polygon(point, polygon):
     return path.contains_point(point)
 
 
-def create_plot(df, output_path='kenpom_ratings_plot.html'):
+def create_plot(df, output_path='kenpom_ratings_plot.html', year=None):
     """
     Create Plotly visualization of KenPom team ratings
     
     Args:
         df: DataFrame with team ratings data
         output_path: Path to save the HTML plot
+        year: Season year (optional, defaults to current year)
     
     Returns:
         Path to saved plot file
     """
+    from datetime import datetime
+    
+    # Get date string for title
+    if year:
+        date_str = f"{year}-{year+1} Season"
+    else:
+        date_str = datetime.now().strftime('%B %d, %Y')
     # Define trapezoid points: (64.5,20), (70.2,20), (62.5,40), (72,40)
     trapezoid_points = np.array([
         [64.5, 20],  # bottom left
@@ -179,8 +203,9 @@ def create_plot(df, output_path='kenpom_ratings_plot.html'):
     # Update layout with white theme
     fig.update_layout(
         title=dict(
-            text='ROAD TO INDIANAPOLIS\n' \
-            'Trapezoid of Excellence',
+            text=f'ROAD TO INDIANAPOLIS\n' \
+            f'Trapezoid of Excellence\n' \
+            f'{date_str}',
             font=dict(size=20, color='#009CDE', family='Arial Black'),
             x=0.5
         ),
@@ -221,10 +246,21 @@ def create_plot(df, output_path='kenpom_ratings_plot.html'):
         hovermode='closest'
     )
     
-    # Save the plot
+    # Get the directory of output_path for the PNG file
+    output_dir = os.path.dirname(output_path) if os.path.dirname(output_path) else '.'
+    png_path = os.path.join(output_dir, 'kenpom_ratings.png')
+    
+    # Save the HTML plot
     fig.write_html(output_path)
-    pio.write_image(fig, 'output/kenpom_ratings.png', width=1200, height=800)
     logger.info(f"Plot saved to {output_path}")
+    
+    # Try to save PNG (requires Chrome/Chromium to be installed)
+    try:
+        pio.write_image(fig, png_path, width=1200, height=800)
+        logger.info(f"PNG saved to {png_path}")
+    except Exception as e:
+        logger.warning(f"Could not save PNG image: {str(e)}")
+        logger.info("HTML plot was saved successfully. PNG export requires Chrome/Chromium to be installed.")
     
     # Log summary
     logger.info(f"Teams inside the trapezoid: {len(inside_trapezoid)}")
@@ -236,7 +272,7 @@ def create_plot(df, output_path='kenpom_ratings_plot.html'):
     return output_path
 
 
-def main(year=2026, output_dir='output'):
+def main(year=None, output_dir='output'):
     """
     Main function to fetch data and create visualization
     
@@ -256,7 +292,7 @@ def main(year=2026, output_dir='output'):
         df = fetch_kenpom_data(year)
         
         # Create plot
-        create_plot(df, output_path)
+        create_plot(df, output_path, year=year)
         
         logger.info("Script completed successfully")
         return output_path
