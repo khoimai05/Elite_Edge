@@ -1,0 +1,4 @@
+# System packages for plotly/kaleido (required for PNG export)
+libgl1-mesa-glx
+libglib2.0-0
+
