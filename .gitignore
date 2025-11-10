@@ -34,6 +34,8 @@ logs/
 
 # Output files (but allow HTML files in dags/output/ to be committed)
 output/
-# dags/output/*.png
+!dags/output/
+!dags/output/*.html
+dags/output/*.png
 /tmp/
 
